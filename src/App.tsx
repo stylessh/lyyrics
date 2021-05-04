@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route } from "wouter";
+import { ThemeProvider } from "styled-components";
 
-function App() {
+// providers
+import SearchProvider from "store/search.context";
+
+// screens
+import Home from "pages/Home";
+import Song from "pages/Song";
+
+// components
+import Navbar from "components/Navbar";
+
+import GlobalStyles from "styles/global";
+// theme
+import theme from "styles/theme";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+
+      <Navbar />
+
+      <SearchProvider>
+        <Route path="/">
+          <Home />
+        </Route>
+
+        <Route path="/song/:id">{(params) => <Song id={params.id} />}</Route>
+      </SearchProvider>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
